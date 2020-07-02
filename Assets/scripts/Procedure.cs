@@ -32,9 +32,9 @@ public class Procedure : MonoBehaviour
                         _sceneStates.Add(new JumpingJackState(jumpingJacks, jumpingJacksInstructionLabel,
                             jumpingScore));
                         break;
-                    case StateType.Evade:
-                        _sceneStates.Add(new EvadeState(shootingMachines, dodgeTriggers, evadeBagInstructionlabel,
-                            evadeScore, AvatarAnimator.GetComponent<BodyCalibrate>().Control));
+                    case StateType.Baseball:
+                        _sceneStates.Add(new BaseBallState(shootingMachines, baseballHitTrigger, baseBallInstructionlabel,
+                            baseballScore, AvatarAnimator.GetComponent<BodyCalibrate>().Control, baseballBat));
                         break;
                     case StateType.Punch:
                         _sceneStates.Add(new PunchingState(punchingBag, punchingInstructionlabel, punchScore));
@@ -45,7 +45,6 @@ public class Procedure : MonoBehaviour
     }
 
     public List<StateType> types;
-    public int testref;
     private List<SceneState> _sceneStates = new List<SceneState>();
     public List<SceneState> SceneStates => _sceneStates;
 
@@ -54,11 +53,12 @@ public class Procedure : MonoBehaviour
     public GameObject punchingBag;
     public GameObject jumpingJacksInstructionLabel;
     public GameObject punchingInstructionlabel;
-    public GameObject evadeBagInstructionlabel;
+    public GameObject baseBallInstructionlabel;
     public GameObject shootingMachines;
-    public GameObject dodgeTriggers;
+    public GameObject baseballHitTrigger;
+    public GameObject baseballBat;
     public Text jumpingScore;
-    public Text evadeScore;
+    public Text baseballScore;
     public Text punchScore;
     public SceneState currentState;
     public GameObject nextButton;
@@ -118,7 +118,7 @@ public enum StateType
 {
     JumpingJacks,
     Punch,
-    Evade
+    Baseball
 }
 
 [Serializable]
@@ -205,21 +205,23 @@ public class JumpingJackState : SceneState
     }
 }
 
-class EvadeState : SceneState
+class BaseBallState : SceneState
 {
-    public EvadeState(GameObject shootingMachines, GameObject dodgeTriggers, GameObject evadeLabel,
-        Text evadeScoreLabel, Control controlMode)
+    public BaseBallState(GameObject shootingMachines, GameObject dodgeTriggers, GameObject evadeLabel,
+        Text evadeScoreLabel, Control controlMode, GameObject baseballBat)
     {
-        type = StateType.Evade;
+        type = StateType.Baseball;
         this.shootingMachines = shootingMachines;
         this.evadeLabel = evadeLabel;
-        name = "evadeState";
-        animationTriggerName = "switch_to_dodging_stance";
+        name = "baseballState";
+        animationTriggerName = "switch_to_baseball_stance";
         scoreLabel = evadeScoreLabel;
         this.dodgeTriggers = dodgeTriggers;
+        this.baseballBat = baseballBat;
         this._controlMode = controlMode;
     }
 
+    private GameObject baseballBat;
     private Control _controlMode;
     private GameObject dodgeTriggers;
     private GameObject shootingMachines;
@@ -228,6 +230,7 @@ class EvadeState : SceneState
 
     public override IEnumerator enterAnimation()
     {
+        baseballBat.SetActive(true);
         evadeLabel.SetActive(true);
         yield return new WaitForSeconds(instructionDisplay);
         shootingMachines.SetActive(true);

@@ -1,0 +1,3 @@
+jumpingjacks, jacks_score (UnityEngine.UI.Text)
+punch, boxing_score (UnityEngine.UI.Text)
+evade, baseball_score (UnityEngine.UI.Text)

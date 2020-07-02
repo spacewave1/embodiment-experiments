@@ -23,7 +23,7 @@ public class AvatarController : MonoBehaviour
         _bodyCalibrate = GetComponent<BodyCalibrate>();
     }
 
-    public void ReceiveBallHit()
+    public void ProcessBallHit()
     {
         tennisHits++;
         ballsScoreText.text = tennisHits.ToString();

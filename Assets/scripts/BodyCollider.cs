@@ -17,7 +17,7 @@ public class BodyCollider : MonoBehaviour
         if (other.gameObject.CompareTag("incoming"))
         {
             other.gameObject.tag = "Untagged";
-            _avatarController.ReceiveBallHit();
+           //_avatarController.ReceiveBallHit();
         }
     }
 }

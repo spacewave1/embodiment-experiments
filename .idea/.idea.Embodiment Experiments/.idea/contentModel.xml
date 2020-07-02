@@ -7,8 +7,7 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="ButtonFunctions.cs" t="Include" />
-        <e p="CustomPointer.cs" t="Include" />
+        <e p="BatCollider.cs" t="Include" />
         <e p="Materials" t="Include">
           <e p="MirrorReflection.shader" t="Include" />
         </e>
@@ -769,7 +768,6 @@
             </e>
           </e>
         </e>
-        <e p="SceneManagment.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="AvatarController.cs" t="Include" />
           <e p="BallShooter.cs" t="Include" />
@@ -777,7 +775,9 @@
           <e p="BodyCalibrate.cs" t="Include" />
           <e p="BodyCollider.cs" t="Include" />
           <e p="BoxingGlove.cs" t="Include" />
+          <e p="ButtonFunctions.cs" t="Include" />
           <e p="ButtonFunctionsEditor.cs" t="Include" />
+          <e p="CustomPointer.cs" t="Include" />
           <e p="IKControl.cs" t="Include" />
           <e p="JumpingJacksProcedure.cs" t="Include" />
           <e p="JumpingJackZone.cs" t="Include" />
@@ -785,12 +785,14 @@
           <e p="Procedure.cs" t="Include" />
           <e p="ProcedureMode.cs" t="Include" />
           <e p="PunchingTarget.cs" t="Include" />
+          <e p="SceneManagment.cs" t="Include" />
           <e p="ScoreWriter.cs" t="Include" />
+          <e p="SyncCamera.cs" t="Include" />
           <e p="Targets.cs" t="Include" />
           <e p="TargetsEditor.cs" t="Include" />
+          <e p="TriggerDodge.cs" t="Include" />
         </e>
-        <e p="SyncCamera.cs" t="Include" />
-        <e p="TriggerDodge.cs" t="Include" />
+        <e p="TennisBallTrigger.cs" t="Include" />
       </e>
       <e p="Embodiment Experiments.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />

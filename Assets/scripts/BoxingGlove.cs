@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BoxingGlove : MonoBehaviour
 {
-    public Transform rayOrigin;
+    public List<Transform> rayOrigins;
     private AvatarController _avatarController;
     public float rayCastLength = 0.05f;
     
@@ -16,38 +16,43 @@ public class BoxingGlove : MonoBehaviour
     
     void Update()
     {
-        RaycastHit hit;
-        List<Ray> rays = new List<Ray>();
-        rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward) * rayCastLength));
-        rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward + rayOrigin.up) * rayCastLength));
-        rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward -rayOrigin.up) * rayCastLength));
-        rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward -rayOrigin.right) * rayCastLength));
-        rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward + rayOrigin.right) * rayCastLength));
-
-        rays.ForEach(ray =>
+        rayOrigins.ForEach(rayOrigin =>
         {
-            Debug.DrawRay(ray.origin, ray.direction * 0.1f, Color.green);
-            if (Physics.Raycast(ray.origin, ray.direction, out hit, 0.1f))
+            RaycastHit hit;
+            List<Ray> rays = new List<Ray>();
+            rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward) * rayCastLength));
+            rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward + rayOrigin.up) * rayCastLength));
+            rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward -rayOrigin.up) * rayCastLength));
+            rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward -rayOrigin.right) * rayCastLength));
+            rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward + rayOrigin.right) * rayCastLength));
+
+            rays.ForEach(ray =>
             {
-                if (hit.collider.CompareTag("target"))
+                Debug.DrawRay(ray.origin, ray.direction * 0.1f, Color.green);
+                if (Physics.Raycast(ray.origin, ray.direction, out hit, 0.1f))
                 {
-                    _avatarController.ProcessBoxHit(hit.collider.GetComponent<PunchingTarget>());
+                    if (hit.collider.CompareTag("target"))
+                    {
+                        _avatarController.ProcessBoxHit(hit.collider.GetComponent<PunchingTarget>());
+                    }
+                    if (hit.collider.CompareTag("zone"))
+                    {
+                        hit.collider.GetComponent<JumpingJackZone>().handsInZone = true;
+                    }
                 }
-                if (hit.collider.CompareTag("zone"))
-                {
-                    hit.collider.GetComponent<JumpingJackZone>().handsInZone = true;
-                }
-            }
+            }); 
         });
     }
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        List<Ray> rays = new List<Ray>();
-        rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward) * rayCastLength));
-        rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward + -rayOrigin.up) * rayCastLength));
-        
-        rays.ForEach(ray => Gizmos.DrawRay(ray.origin, ray.direction));
+        rayOrigins.ForEach(rayOrigin =>
+        {
+            Gizmos.color = Color.red;
+            List<Ray> rays = new List<Ray>();
+            rays.Add(new Ray(rayOrigin.position, rayOrigin.TransformDirection(rayOrigin.forward) * rayCastLength));
+
+            rays.ForEach(ray => Gizmos.DrawRay(ray.origin, ray.direction * rayCastLength)); 
+        });
     }
 }
